@@ -148,13 +148,23 @@ def format_verse(results: list):
     return results_strings  
 
 
-results = testVectors.calculate_most_similar_n(bible, "were laman and lemuel to scared to try?")
+def main(query: str) -> None:
+    results = testVectors.calculate_most_similar_n(bible, query)
 
-#results = search_inverted_index("laman and lemuel were to afraid to try", inverted_index, bible)
-#results = search_inverted_index_similar("laman and lemuel were to afraid to try", inverted_index, bible, model, n=10)
-results = format_verse(results)
-with open('output.txt', 'w', encoding='utf-8') as f:
-    for result in results:
-        print(result)
-        f.write(f'{result}\n\n')
+    #results = search_inverted_index("laman and lemuel were to afraid to try", inverted_index, bible)
+    #results = search_inverted_index_similar("laman and lemuel were to afraid to try", inverted_index, bible, model, n=10)
+    results = format_verse(results)
+    with open('output.txt', 'w', encoding='utf-8') as f:
+        for result in results:
+            #print(result)
+            f.write(f'{result}\n\n')
+            
+            
+if __name__ == "__main__":
+    q = input("What is your question: ")
+    while q != "q":
+        main(q)
+        q = input("What is your question: ")
+
+    
 
