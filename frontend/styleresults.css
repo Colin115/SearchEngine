@@ -1,0 +1,98 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Global styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #141E30;
+    background-image: linear-gradient(to bottom right, #141E30, #243B55);
+    color: #fff;
+    height: 100vh;
+    width: 100%;
+    margin: 0
+}
+
+header {
+    text-align: center;
+    margin-top: 25px;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+
+main {
+    padding-top: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    max-width: 100%;
+    min-width: none;
+    width: 100px
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    gap: 8px;
+}
+
+input {
+    border: none;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    height: 4vh;
+    max-height: 40px;
+
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  }
+  
+button {
+    border: none;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: .3rem;
+    height: 4vh;
+    max-height: 40px;
+    width: 5vw;
+    min-width: 6rem;
+    font-size: 1rem;
+    background-color: #feca57;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color:#ffb142;
+}
+
+
+.results {
+    background-color: #243B55;
+    padding: 10px;
+    border-radius: 25px;
+    width: 50vw;
+    max-width: 600px;
+    min-width: 300px;
+}
