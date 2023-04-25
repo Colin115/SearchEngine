@@ -38,8 +38,7 @@ main {
 
 form {
     max-width: 100%;
-    min-width: none;
-    width: 100px
+    min-width: 100px;
     display: flex;
     justify-content: center;
     align-items: center;

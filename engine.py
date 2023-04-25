@@ -135,10 +135,10 @@ def format_verse(results: list):
         verse_text = bible[book][chapter][verse-1]
         
         r_string = ""
-        if verse-2 >= 0:
-            r_string += f"{book} {chapter}:{verse} {bible[book][chapter][verse-2]}\n"
+        if verse-3 >= 0:
+            r_string += f"{book} {chapter}:{verse-1} {bible[book][chapter][verse-2]}\n"
             
-        r_string += f"{book} {chapter}:{verse} {verse_text}"
+        r_string += f"{book} {chapter}:{verse+1} {verse_text}"
         
         if verse < len(bible[book][chapter]):
             r_string += f"\n{book} {chapter}:{verse} {bible[book][chapter][verse]}"
