@@ -21,10 +21,28 @@ header {
 
 h1 {
     font-size: 5rem;
+    max-width: 100%;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 5px;
+    
 }
+
+h1 {
+    font-size: 5rem;
+    max-width: 100%;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    h1 {
+      font-size: 3rem;
+      letter-spacing: 2px;
+    }
+  }
+  
 
 h5 {
     font-size: 1rem;
@@ -100,6 +118,24 @@ button:hover {
 }
 
 
-
+@media only screen and (max-width: 600px) {
+    h1 {
+      font-size: 3rem;
+      letter-spacing: 2px;
+    }
+  }
+  
+  @media only screen and (max-width: 800px) {
+    input {
+      width: 80%;
+      max-width: none;
+    }
+    
+    button {
+      width: 50%;
+      max-width: none;
+    }
+  }
+  
 
 
