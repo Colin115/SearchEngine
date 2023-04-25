@@ -1,5 +1,6 @@
 import json
 import numpy as np
+from parseFiles import eval_unique
 from nltk.tokenize import word_tokenize
 from gensim.models import KeyedVectors
 
@@ -78,7 +79,7 @@ def calculate_most_similar_n(bible, query, n=10) -> list:
     
     similarity_lst = []
     for i, vector in enumerate(vectors):
-        similarity = cosine_similarity(vector, new_vector)
+        similarity = cosine_similarity(vector, new_vector) + eval_unique(query, phrases[i])
         similarity_lst.append((similarity, i))
 
     similarity_lst.sort(key=lambda x: x[0], reverse=True)

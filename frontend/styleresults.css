@@ -94,4 +94,9 @@ button:hover {
     width: 50vw;
     max-width: 600px;
     min-width: 300px;
+    margin: 8px;
+}
+
+.results p {
+    text-align: right;
 }

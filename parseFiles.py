@@ -1,3 +1,5 @@
+from nltk.tokenize import word_tokenize
+
 '''
 1 Nephi 1
 Chapter 1
@@ -10,6 +12,8 @@ been highly favored of the Lord in all my days; yea, having had a
 great knowledge of the goodness and the mysteries of God,
 therefore I make a record of my proceedings in my days.
 '''
+
+
 
 def parse_bom():
     books = ['Words of Morman']
@@ -104,4 +108,82 @@ def parse_bible():
                 if book not in not_in:
                     not_in.append(book)
     return bible       
-         
+
+
+def calculate_fequencies() -> dict:
+    bible: dict = {**parse_bible(), **parse_bom()}
+   
+    words = {}
+    for book in bible:
+        for chapter in bible[book]:
+            for verse in bible[book][chapter]:
+                for word in word_tokenize(verse):
+                    word = word.lower()
+                    if words.get(word) is None:
+                        words[word] = 1
+                    else:
+                        words[word] += 1
+    return words
+
+''' Returns 1 for bassic, 2 for values that appear 3-12 time, 3 for words that appear once'''
+def frequent_score(word: str, freq: dict) -> int:
+    if freq.get(word) is None or freq.get(word) > 1000:
+        return 0
+    elif freq.get(word) > 0:
+        return 1-(freq.get(word)/sum(freq.values()))#sum(freq.values())/freq.get(word)*50
+    '''return 1
+    elif freq.get(word) > 3:
+        return 2
+    elif freq.get(word) == 3:
+        return 3
+    elif freq.get(word) == 2:
+        return 4
+    else:
+        return 5'''
+
+''' Returns quartile ranges Q1, Q3'''      
+def get_data_info(data):
+    # Step 1: Sort the data in ascending order
+    data_sorted = sorted(data)
+
+    # Step 2: Find the median (Q2)
+    mid = len(data_sorted) // 2
+    Q2 = data_sorted[mid]
+    print(Q2)
+    # Step 3: Find Q1 and Q3
+    if len(data_sorted) % 2 == 0:
+        Q1 = (data_sorted[mid//2] + data_sorted[mid//2-1]) / 2
+        Q3 = (data_sorted[-mid//2-1] + data_sorted[-mid//2]) / 2
+    else:
+        Q1 = data_sorted[mid//2]
+        Q3 = data_sorted[-mid//2-1]
+    print(f'Q1: {Q1}\tQ2: {Q2}\tQ3: {Q3}')
+    print(f'Length: {len(data_sorted)}\tMidpoint: {mid}')
+    print(f'First 2 {data_sorted.index(2)}\t First 3 {data_sorted.index(3)}')
+    return Q1, Q3
+
+'''Take a verese and the query and finds how many unique words are shared'''
+def eval_unique(query: str, verse: str):
+
+    query = [i.lower() for i in word_tokenize(query)]
+    verse = [i.lower() for i in word_tokenize(verse)]
+    w = "a"
+    similar_words = list(filter(lambda x: x in verse and x not in ",.():;", query))
+    score = 0
+    if len(similar_words) != 0:
+        for word in similar_words:
+            score += frequent_score(word, words)
+        score /= len(similar_words)
+        
+    return score
+     
+                   
+'''words: dict = calculate_fequencies()
+sorted_dict = dict(sorted(words.items(), key=lambda item: item[1], reverse=False))
+
+print(sorted_dict)'''
+
+#print(eval_unique("Who was nephi, and did he make a record?", "I, Nephi, having been born of goodly parents, therefore I was taught somewhat in all the learning of my father; and having seen many afflictions in the course of my days, nevertheless, having been highly favored of the Lord in all my days; yea, having had a great knowledge of the goodness and the mysteries of God, therefore I make a record of my proceedings in my days."))
+words: dict = calculate_fequencies()
+print(words.get('ammon'))
+#get_data_info(words.values())

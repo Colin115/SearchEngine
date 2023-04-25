@@ -135,13 +135,13 @@ def format_verse(results: list):
         verse_text = bible[book][chapter][verse-1]
         
         r_string = ""
-        if verse-3 >= 0:
+        if verse-1 >= 0:
             r_string += f"{book} {chapter}:{verse-1} {bible[book][chapter][verse-2]}\n"
             
-        r_string += f"{book} {chapter}:{verse+1} {verse_text}"
+        r_string += f"{book} {chapter}:{verse} {verse_text}\n"
         
         if verse < len(bible[book][chapter]):
-            r_string += f"\n{book} {chapter}:{verse} {bible[book][chapter][verse]}"
+            r_string += f"{book} {chapter}:{verse+1} {bible[book][chapter][verse]}\n"
         
         
         results_strings.append(r_string)  
@@ -151,8 +151,6 @@ def format_verse(results: list):
 def main(query: str) -> None:
     results = testVectors.calculate_most_similar_n(bible, query)
 
-    #results = search_inverted_index("laman and lemuel were to afraid to try", inverted_index, bible)
-    #results = search_inverted_index_similar("laman and lemuel were to afraid to try", inverted_index, bible, model, n=10)
     results = format_verse(results)
     with open('output.txt', 'w', encoding='utf-8') as f:
         for result in results:
