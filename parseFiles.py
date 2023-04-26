@@ -110,9 +110,7 @@ def parse_bible():
     return bible       
 
 
-def calculate_fequencies() -> dict:
-    bible: dict = {**parse_bible(), **parse_bom()}
-   
+def calculate_fequencies() -> dict:   
     words = {}
     for book in bible:
         for chapter in bible[book]:
@@ -128,18 +126,10 @@ def calculate_fequencies() -> dict:
 ''' Returns 1 for bassic, 2 for values that appear 3-12 time, 3 for words that appear once'''
 def frequent_score(word: str, freq: dict) -> int:
     if freq.get(word) is None or freq.get(word) > 1000:
-        return 0
+        return 1
     elif freq.get(word) > 0:
-        return 1-(freq.get(word)/sum(freq.values()))#sum(freq.values())/freq.get(word)*50
-    '''return 1
-    elif freq.get(word) > 3:
-        return 2
-    elif freq.get(word) == 3:
-        return 3
-    elif freq.get(word) == 2:
-        return 4
-    else:
-        return 5'''
+        return 3-(freq.get(word)/max_freq)*1.5
+
 
 ''' Returns quartile ranges Q1, Q3'''      
 def get_data_info(data):
@@ -164,16 +154,13 @@ def get_data_info(data):
 
 '''Take a verese and the query and finds how many unique words are shared'''
 def eval_unique(query: str, verse: str):
-
-    query = [i.lower() for i in word_tokenize(query)]
-    verse = [i.lower() for i in word_tokenize(verse)]
-    w = "a"
     similar_words = list(filter(lambda x: x in verse and x not in ",.():;", query))
     score = 0
-    if len(similar_words) != 0:
-        for word in similar_words:
-            score += frequent_score(word, words)
-        score /= len(similar_words)
+    if len(similar_words) == 0:
+        return 0
+    
+    score = sum([frequent_score(word, words) for word in similar_words])
+    score /= len(similar_words)
         
     return score
      
@@ -183,7 +170,9 @@ sorted_dict = dict(sorted(words.items(), key=lambda item: item[1], reverse=False
 
 print(sorted_dict)'''
 
-#print(eval_unique("Who was nephi, and did he make a record?", "I, Nephi, having been born of goodly parents, therefore I was taught somewhat in all the learning of my father; and having seen many afflictions in the course of my days, nevertheless, having been highly favored of the Lord in all my days; yea, having had a great knowledge of the goodness and the mysteries of God, therefore I make a record of my proceedings in my days."))
+bible: dict = {**parse_bible(), **parse_bom()}
 words: dict = calculate_fequencies()
-print(words.get('ammon'))
+max_freq = max(words.values())
+
 #get_data_info(words.values())
+#print(eval_unique("Who was nephi, and did he make a record?", "I, Nephi, having been born of goodly parents, therefore I was taught somewhat in all the learning of my father; and having seen many afflictions in the course of my days, nevertheless, having been highly favored of the Lord in all my days; yea, having had a great knowledge of the goodness and the mysteries of God, therefore I make a record of my proceedings in my days."))

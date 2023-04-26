@@ -52,6 +52,7 @@ def cosine_similarity(vec1, vec2):
 calculates the most similar n phrases to the query
 returns n most similar
 '''
+import time
 def calculate_most_similar_n(bible, query, n=10) -> list:
     phrases = []
     ids = {}
@@ -78,10 +79,11 @@ def calculate_most_similar_n(bible, query, n=10) -> list:
     new_vector = make_vector([query])[0]
     
     similarity_lst = []
+    t = time.time()
     for i, vector in enumerate(vectors):
         similarity = cosine_similarity(vector, new_vector) + eval_unique(query, phrases[i])
         similarity_lst.append((similarity, i))
-
+    print(time.time()-t)
     similarity_lst.sort(key=lambda x: x[0], reverse=True)
     verse_nums = [ids[phrases[i[1]]] for i in similarity_lst[:n]]
 
