@@ -109,6 +109,12 @@ def parse_bible():
                     not_in.append(book)
     return bible       
 
+def my_tokenizer(text):
+    punct = ',.!?:;()[]{}-_`\'\"'
+    tokens = text.lower().split()
+    tokens = [t.strip(punct) for t in tokens]
+    tokens = [t for t in tokens if len(t) > 0]
+    return tokens
 
 def calculate_fequencies() -> dict:   
     words = {}
@@ -154,7 +160,13 @@ def get_data_info(data):
 
 '''Take a verese and the query and finds how many unique words are shared'''
 def eval_unique(query: str, verse: str):
+    query = set([i for i in my_tokenizer(query)])
+    verse = set([i for i in my_tokenizer(verse)])
+    
     similar_words = list(filter(lambda x: x in verse and x not in ",.():;", query))
+
+    print(similar_words)
+    #similar_words = list(filter(lambda x: x in verse and x not in ",.():;", query))
     score = 0
     if len(similar_words) == 0:
         return 0
@@ -164,7 +176,8 @@ def eval_unique(query: str, verse: str):
         
     return score
      
-                   
+
+                 
 '''words: dict = calculate_fequencies()
 sorted_dict = dict(sorted(words.items(), key=lambda item: item[1], reverse=False))
 
