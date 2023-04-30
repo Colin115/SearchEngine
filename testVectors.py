@@ -51,9 +51,12 @@ def cosine_similarity(vec1, vec2):
 '''
 calculates the most similar n phrases to the query
 returns n most similar
+
+BOM starts at index = 21443 in phrases
+
 '''
 import time
-def calculate_most_similar_n(bible, query, n=10) -> list:
+def calculate_most_similar_n(bible, query, n=10, books=['bible', 'bom']) -> list:
     phrases = []
     ids = {}
     for book in bible:
@@ -62,6 +65,8 @@ def calculate_most_similar_n(bible, query, n=10) -> list:
                 phrases.append(verse)
                 ids[verse] = (book, chapter, i)
 
+
+    
     '''vectors = make_vector(phrases)
     
     vs = [vector.tolist() for vector in vectors]
@@ -75,7 +80,24 @@ def calculate_most_similar_n(bible, query, n=10) -> list:
     
     with open('vector.json', 'r') as f:
         vectors += json.load(f)
-        
+    
+    #seperate books
+    bible_phrases = phrases[:21443]
+    bible_vec = vectors[:21443]
+    
+    bom_phrases = phrases[21443:] 
+    bom_vec = vectors[21443:]
+    
+    #change the vectors based off the books
+    phrases = []
+    vectors = []
+    if 'bible' in books:
+        phrases = bible_phrases
+        vectors = bible_vec
+    if 'bom' in books:
+        phrases += bom_phrases
+        vectors += bom_vec
+    
     new_vector = make_vector([query])[0]
     
     similarity_lst = []
