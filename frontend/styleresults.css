@@ -100,3 +100,36 @@ button:hover {
 .results p {
     text-align: right;
 }
+
+
+/* selection */
+.selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  
+    min-height: 8vh
+  }
+  /* Hide default checkbox */
+  input[type="checkbox"] {
+    display: none;
+  }
+  
+  /* Style label to look like a button */
+  .options {
+    background-color: #243B55;
+    border-radius: 25px;
+    padding: 10px;
+    font-size: small;
+    flex-wrap: wrap;
+    margin: 5px;
+    outline: solid white 1px;
+  }
+  
+  /* Style label for checked checkbox */
+  input[type="checkbox"]:checked + label {
+    background-color: #141E30;
+    color: #fff;
+  }
