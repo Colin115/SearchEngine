@@ -13,38 +13,39 @@
         <h5>Powered by Casdev engineering</h5>
     </header>
 
-    <section class="books">
-      <form class="selection" id="selection">
-        <div>
-          <input type="checkbox" id="header" name="searchIn" value="header">
-          <label class="options" for="header">Bible</label>
-        </div>
-
-        <div>
-        <input type="checkbox" id="main" name="searchIn" value="main">
-        <label class="options" for="main">Book of Mormon</label>
-        </div>
-      
-        <div>
-        <input type="checkbox" id="sidebar" name="searchIn" value="sidebar">
-        <label class="options" for="sidebar">D&C</label>
-        </div>
-
-        <div>
-        <input type="checkbox" id="footer" name="searchIn" value="footer">
-        <label class="options" for="footer">Pearl Of Great Price</label>
-        </div>
-      </form>
-      
-      </section>
-      
       
 
     <main>
-        <form class="search">
-            <label for="search">What do you want to search for?</label>
-            <input type="text" id="search" name="search" placeholder="Enter keywords here...">
-            <button>Search</button>
+        <form>
+        <section class="books">
+          <div class="selection">
+              <div>
+                <input type="checkbox" id="bible" name="searchIn" value="bible">
+                <label class="options" for="bible">Bible</label>
+              </div>
+      
+              <div>
+              <input type="checkbox" id="bom" name="searchIn" value="bom">
+              <label class="options" for="bom">Book of Mormon</label>
+              </div>
+            
+              <div>
+              <input type="checkbox" id="D&C" name="searchIn" value="D&C">
+              <label class="options" for="D&C">D&C</label>
+              </div>
+      
+              <div>
+              <input type="checkbox" id="pogp" name="searchIn" value="pogp">
+              <label class="options" for="pogp">Pearl Of Great Price</label>
+              </div>
+          </div>
+        </section>
+
+          <section class="search">
+              <label for="search">What do you want to search for?</label>
+              <input type="text" id="search" name="search" placeholder="Enter keywords here...">
+              <button>Search</button>
+          </section>
         </form>
     </main>
 </body>
