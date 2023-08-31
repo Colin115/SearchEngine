@@ -1,26 +1,12 @@
 from nltk.tokenize import word_tokenize
 
-'''
-1 Nephi 1
-Chapter 1
-
-1 Nephi 1:1
- 1 I, Nephi, having been born of goodly parents, therefore I was
-taught somewhat in all the learning of my father; and having seen
-many afflictions in the course of my days, nevertheless, having
-been highly favored of the Lord in all my days; yea, having had a
-great knowledge of the goodness and the mysteries of God,
-therefore I make a record of my proceedings in my days.
-'''
-
-
 
 def parse_bom():
-    books = ['Words of Morman']
+    
     bom = {}
     with open('BOM.txt', 'r', encoding='UTF-8' ) as f:
         book = f.read()
-        
+        books = []
         lines = book.split("\n")
         lines = list(filter(lambda x: x != "", lines))
         
@@ -37,19 +23,18 @@ def parse_bom():
                 
                 if cur_book not in books:
                     books.append(cur_book)
+        books.append('Words of Morman')
         
         for book in books:
             #make each book have a dictionary of chapters
             bom[book] = {}
         
-        new_verse = True
         cur_verse = []
         cur_book = '1 Nephi'
         cur_chapter = 1
         for i in range(len(lines)):
             if lines[i][0] == " ":
                 #add old chapter to verse
-                new_verse = True
                 cur_verse.pop(-1)
                 if bom[cur_book].get(cur_chapter) is not None:
                     bom[cur_book][cur_chapter].append(" ".join(cur_verse))
@@ -80,9 +65,7 @@ def parse_bom():
 def parse_bible():
     #bible = {"Ge":{}, "Exo":{}, "Lev":{}, "Num":{}, "Deu":{}, "Josh":{}, "Jdgs":{}, "Ruth":{}, "":{}, "Ezra":{}, "Neh":{}, "Est":{}, "Job":{}, "Psa":{}, "Prv":{}, "Eccl":{}, "SSol":{}, "Isa":{}, "Jer":{}, "Lam":{}, "Eze":{}, "Dan":{}, "Hos":{}, "Joel":{}, "Amos":{}, "Obad":{}, "Jonah":{}, "Mic":{}, "Nahum":{}, "Hab":{}, "Zep":{}, "Hag":{}, "Zec":{}, "Mal":{}, "Mat":{}, "Mark":{}, "Luke":{}, "John":{}, "Acts":{}, "Rom":{}, "Gal":{}, "Eph":{}, "Phi":{}, "Col":{}, "Titus":{}, "Phmn":{}, "Heb":{}, "Jas":{}, "Jude":{}, "Rev":{}, }
     bible = {"":{}, "Gen":{},"Exo":{},"Lev":{},"Num":{},"Deut":{},"Josh":{},"Judg":{},"Ruth":{},"1 Sam":{},"2 Sam":{},"1 Kgs":{},"2 Kgs":{},"1 Chr":{},"2 Chr":{},"Ezra":{},"Neh":{},"Esth":{},"Job":{},"Ps":{},"Prov":{},"Eccl":{},"Song":{},"Isa":{},"Jer":{},"Lam":{},"Ezek":{},"Dan":{},"Hos":{},"Joel":{},"Amos":{},"Obad":{},"Jonah":{},"Micah":{},"Nah":{},"Hab":{},"Zeph":{},"Hag":{},"Zech":{},"Mal":{},"Matt":{},"Mark":{},"Luke":{},"John":{},"Acts":{},"Rom":{},"1 Cor":{},"2 Cor":{},"Gal":{},"Eph":{},"Phil":{},"Col":{},"1 Thess":{},"2 Thess":{},"1 Tim":{},"2 Tim":{},"Titus":{},"Phlm":{},"Heb":{},"Jas":{},"1 Pet":{},"2 Pet":{},"1 John":{},"2 John":{},"3 John":{},"Jude":{},"Rev":{}}
-    #bible = {"Ge":{}, "Exo":{}, "Lev":{}, "Num":{}, "Deu":{}, "Josh":{}, "Jdgs":{}, "Ruth":{}, "":{}, "Ezra":{}, "Neh":{}, "Est":{}}
 
-    books = {}
     nums = {'1', '2', '3', '4', '5', '6' ,'7' ,'8', '9'}
     not_in = []
     with open('bible.txt', 'r', encoding='utf-8') as f:
@@ -165,7 +148,6 @@ def eval_unique(query: str, verse: str):
     
     similar_words = list(filter(lambda x: x in verse and x not in ",.():;", query))
 
-    print(similar_words)
     #similar_words = list(filter(lambda x: x in verse and x not in ",.():;", query))
     score = 0
     if len(similar_words) == 0:
@@ -177,15 +159,9 @@ def eval_unique(query: str, verse: str):
     return score
      
 
-                 
-'''words: dict = calculate_fequencies()
-sorted_dict = dict(sorted(words.items(), key=lambda item: item[1], reverse=False))
 
-print(sorted_dict)'''
 
 bible: dict = {**parse_bible(), **parse_bom()}
 words: dict = calculate_fequencies()
 max_freq = max(words.values())
 
-#get_data_info(words.values())
-#print(eval_unique("Who was nephi, and did he make a record?", "I, Nephi, having been born of goodly parents, therefore I was taught somewhat in all the learning of my father; and having seen many afflictions in the course of my days, nevertheless, having been highly favored of the Lord in all my days; yea, having had a great knowledge of the goodness and the mysteries of God, therefore I make a record of my proceedings in my days."))

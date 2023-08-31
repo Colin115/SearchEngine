@@ -8,6 +8,13 @@ from gensim.models import KeyedVectors
 
 model = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
 
+vs = []
+with open('vector_bible.json', 'r') as f:
+    vs = json.load(f)
+
+with open('vector.json', 'r') as f:
+    vs += json.load(f)
+
 '''
 takes a list of phrases
 converts all of them to vecotrs
@@ -57,6 +64,7 @@ BOM starts at index = 21443 in phrases
 '''
 import time
 def calculate_most_similar_n(bible, query, n=10, books=['bible', 'bom']) -> list:
+    vectors = vs
     phrases = []
     ids = {}
     for book in bible:
@@ -66,24 +74,24 @@ def calculate_most_similar_n(bible, query, n=10, books=['bible', 'bom']) -> list
                 ids[verse] = (book, chapter, i)
 
 
+    '''
+    uncomment to generate the vecotors
     
-    '''vectors = make_vector(phrases)
+    
+    vectors = make_vector(phrases)
     
     vs = [vector.tolist() for vector in vectors]
     # save the vector to a JSON file
     with open('vector_bible.json', 'w') as f:
-        json.dump(vs, f)'''
+        json.dump(vs, f)
+    '''
     
-    vectors = []
-    with open('vector_bible.json', 'r') as f:
-        vectors = json.load(f)
-    
-    with open('vector.json', 'r') as f:
-        vectors += json.load(f)
+
     
     #seperate books
     bible_phrases = phrases[:21443]
     bible_vec = vectors[:21443]
+    
     
     bom_phrases = phrases[21443:] 
     bom_vec = vectors[21443:]
